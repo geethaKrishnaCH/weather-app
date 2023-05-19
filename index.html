@@ -15,7 +15,7 @@
     <div class="header">
       <div class="app-title">
         <img src="resources/weather.svg" alt="" id="weather-icon" />
-        <h3>Weather Forecast</h3>
+        <h3>Weather</h3>
       </div>
       <div class="search-box">
         <div class="autocomplete">
@@ -35,27 +35,14 @@
         <!-- <div id="loader" class=""></div> -->
       </div>
     </div>
-    <div class="main-content">
-      <div class="layout-grid">
-        <div class="today-weather">
-          <div class="current-weather">
-            <div class="location-temprature">
-              <div class="location">
-                <h2>Madrid</h2>
-                <p>Chance of rain: 0%</p>
-              </div>
-              <div class="temperature">
-                <h2>31</h2>
-              </div>
-            </div>
-            <div class="weather-icon">
-              <img src="resources/animated/day.svg" alt="" />
-            </div>
-          </div>
+    <div class="main-content" id="main-content">
+      <div class="layout-grid" id="layout-grid">
+        <div class="today-weather" id="today-weather">
+          <div class="current-weather" id="current-weather"></div>
           <div class="today-forecast-weather"></div>
           <div class="air-conditions"></div>
         </div>
-        <div class="forecast-weather"></div>
+        <div class="forecast-weather" id="forecast-weather"></div>
       </div>
     </div>
     <script src="scripts/index.js"></script>
