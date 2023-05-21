@@ -249,6 +249,7 @@ function getWeatherIcon(key) {
     "PATCHY LIGHT RAIN WITH THUNDER": "resources/animated/thunder.svg",
     CLOUDY: "resources/animated/cloudy.svg",
     MIST: "resources/static/misty.svg",
+    CLEAR: "resources/static/clear-sky.png",
   };
 
   return weatherIconMap[key.toUpperCase()];
