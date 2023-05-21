@@ -2,8 +2,8 @@
 const CITY_API_KEY = "7h33JV2XkCF7OxfCvjdChQ==gnVSsMgsXhC18k17";
 const CITY_BASE_URL = "https://api.api-ninjas.com/v1/city";
 const WEATHER_API_KEY = "fbd609a14d53449c9cd101727231405";
-const CURRENT_WEATHER_BASE_URL = "http://api.weatherapi.com/v1/current.json";
-const FORECAST_WEATHER_BASE_URL = "http://api.weatherapi.com/v1/forecast.json";
+const CURRENT_WEATHER_BASE_URL = "https://api.weatherapi.com/v1/current.json";
+const FORECAST_WEATHER_BASE_URL = "https://api.weatherapi.com/v1/forecast.json";
 
 const cityInput = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
@@ -256,7 +256,6 @@ function getWeatherIcon(key) {
 function getCurrentLocation() {
   navigator.geolocation.getCurrentPosition(
     (pos) => {
-      console.log(pos);
       const crds = pos.coords;
       const latitude = crds.latitude;
       const longitude = crds.longitude;
