@@ -8,7 +8,7 @@ const FORECAST_WEATHER_BASE_URL = "http://api.weatherapi.com/v1/forecast.json";
 const cityInput = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
 const loader = document.getElementById("loader");
-const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+// const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 const globalLoaderContainer = document.getElementById(
   "global-loader-container"
@@ -16,6 +16,7 @@ const globalLoaderContainer = document.getElementById(
 
 window.onload = () => {
   hideMainContent();
+  getCurrentLocation();
 };
 
 let selectedCity = {};
@@ -76,9 +77,12 @@ async function getForecastWeather() {
     hideMainContent();
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log(result);
+    if (!selectedCity.name) {
+      selectedCity.name = result.location.name;
+    }
     populateCurrentWeather(result.current);
     populateForecastWeather(result.forecast);
+    populateForecastGraph(result.forecast.forecastday[0]);
     showMainContent();
     globalLoaderContainer.classList.remove("loader-container");
   } catch (error) {
@@ -148,7 +152,7 @@ function populateCurrentWeather(data) {
       </div>
     </div>
     <div class="weather-icon">
-      <img class="lg" src="resources/animated/cloudy-day-2.svg" alt="" />
+      <img class="lg" src="${getWeatherIcon(data.condition.text)}" alt="" />
     </div>
   `;
 }
@@ -160,16 +164,15 @@ function populateForecastWeather(data) {
     let temperatures = it.hour.map((item) => item.temp_c);
     let maxTemperature = Math.max(...temperatures);
     let minTemperature = Math.min(...temperatures);
-    let day = days[new Date(it.date).getDay()];
+    // let day = days[new Date(it.date).getDay()];
 
-    console.log(day);
     dayWeatherInnerHTML =
       dayWeatherInnerHTML +
       `
       <div class="forecast-day-weather">
-        <div>${day}</div>
-        <div class="text-align-center d-flex align-items-center">
-          <img src="resources/animated/cloudy.svg" alt="" />
+        <div>${it.date}</div>
+        <div class="d-flex align-items-center">
+          <img src="${getWeatherIcon(it.day.condition.text)}" alt="" />
           <p>${it.day.condition.text.toUpperCase()}</p>
         </div>
         <div class="text-align-right">
@@ -187,6 +190,43 @@ function populateForecastWeather(data) {
   forecastWeather.innerHTML = innerHTML;
 }
 
+function populateForecastGraph(data) {
+  const xValues = [
+    "1AM",
+    "3AM",
+    "5AM",
+    "7AM",
+    "9AM",
+    "11AM",
+    "1PM",
+    "3PM",
+    "5PM",
+    "7PM",
+    "9PM",
+    "11PM",
+  ];
+  let yValues = data.hour
+    .filter((it, idx) => idx % 2 === 1)
+    .map((it) => it.temp_c);
+
+  new Chart("myChart", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [
+        {
+          label: "Today Weather",
+          data: yValues,
+          fill: false,
+          borderColor: "rgb(110 178 255)",
+          tension: 0,
+        },
+      ],
+    },
+    options: {},
+  });
+}
+
 function hideMainContent() {
   const mainContent = document.getElementById("layout-grid");
   mainContent.classList.remove("visible");
@@ -196,4 +236,38 @@ function showMainContent() {
   const mainContent = document.getElementById("layout-grid");
   mainContent.classList.remove("invisible");
   mainContent.classList.add("visible");
+}
+
+function getWeatherIcon(key) {
+  const weatherIconMap = {
+    SUNNY: "resources/animated/day.svg",
+    "PATCHY RAIN POSSIBLE": "resources/animated/rainy-2.svg",
+    "PARTLY CLOUDY": "resources/animated/cloudy-day-1.svg",
+    OVERCAST: "resources/animated/cloudy-day-3.svg",
+    "MODERATE RAIN": "resources/animated/rainy-5.svg",
+    "HEAVY RAIN": "resources/animated/rainy-7.svg",
+    "PATCHY LIGHT RAIN WITH THUNDER": "resources/animated/thunder.svg",
+    CLOUDY: "resources/animated/cloudy.svg",
+  };
+
+  return weatherIconMap[key.toUpperCase()];
+}
+
+function getCurrentLocation() {
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      console.log(pos);
+      const crds = pos.coords;
+      const latitude = crds.latitude;
+      const longitude = crds.longitude;
+      selectedCity = {
+        latitude: latitude,
+        longitude: longitude,
+      };
+      getForecastWeather();
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 }

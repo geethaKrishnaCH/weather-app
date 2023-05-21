@@ -4,7 +4,7 @@ body {
 }
 
 * {
-  color: #e6e6e6;
+  color: #6a6a6a;
 }
 
 input,
@@ -28,7 +28,7 @@ input,
 .app-title h3 {
   margin: 0;
   font-size: 1.5rem;
-  color: white;
+  color: #f9f9f9;
 }
 
 .header {
@@ -37,7 +37,7 @@ input,
   display: flex;
   padding: 0.5rem 0;
   justify-content: center;
-  background-color: #434546;
+  background-color: #2363a2;
   z-index: 1;
 }
 
@@ -161,7 +161,7 @@ input,
   right: 0;
   bottom: 0;
   color: white;
-  background-color: #2e2e2d;
+  background-color: #d9d9d9;
   z-index: 0;
   padding: 2rem 2rem;
   overflow: auto;
@@ -171,7 +171,7 @@ input,
   display: grid;
   grid-template-columns: 4fr 3fr;
   column-gap: 1rem;
-  background-color: #434546;
+  background-color: #e8e8e8;
   border-radius: 16px;
   padding: 2rem 4rem;
 }
@@ -204,7 +204,7 @@ h2 {
 
 .forecast-weather {
   border-radius: 2rem;
-  background-color: #2f2f2f;
+  background-color: #d9d9d9;
   padding: 1rem 3rem;
 }
 
@@ -230,10 +230,14 @@ h2 {
 
 .forecast-day-weather {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 2fr 5fr 2fr;
   align-items: center;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #464646;
+}
+
+.today-forecast-weather {
+  padding: 1rem;
 }
 
 .visible {
