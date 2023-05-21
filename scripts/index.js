@@ -248,6 +248,7 @@ function getWeatherIcon(key) {
     "HEAVY RAIN": "resources/animated/rainy-7.svg",
     "PATCHY LIGHT RAIN WITH THUNDER": "resources/animated/thunder.svg",
     CLOUDY: "resources/animated/cloudy.svg",
+    MIST: "resources/animated/misty.svg",
   };
 
   return weatherIconMap[key.toUpperCase()];
